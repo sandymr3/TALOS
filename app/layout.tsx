@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/_core/navbar/Navbar";
 import Footer from "@/components/_core/footer/Footer";
+import SmoothScroll from "@/components/SmoothScroll";
 
 export const metadata: Metadata = {
   title: "College Symposium 2025",
@@ -16,11 +17,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen flex flex-col">
-        <Navbar />
-        <main className="flex-grow">
-          {children}
-        </main>
-        <Footer />
+        <SmoothScroll>
+          <Navbar />
+          <main className="flex-grow">
+            {children}
+          </main>
+          <Footer />
+        </SmoothScroll>
       </body>
     </html>
   );
