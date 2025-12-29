@@ -10,36 +10,67 @@ export default function PreviewSection() {
       title: "Flagship Event 1",
       desc: "Experience the thrill of competition with our headline event.",
       tag: "Trending",
+      image: "https://images.unsplash.com/photo-1526378722484-bd91ca387e72",
     },
     {
       title: "Flagship Event 2",
-      desc: "Experience the thrill of competition with our headline event.",
+      desc: "Battle the best minds in our elite challenge.",
       tag: "Trending",
+      image: "https://images.unsplash.com/photo-1518770660439-4636190af475",
     },
     {
       title: "Flagship Event 3",
-      desc: "Experience the thrill of competition with our headline event.",
+      desc: "Showcase innovation and problem-solving under pressure.",
       tag: "Trending",
+      image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d",
+    },
+    {
+      title: "Flagship Event 4",
+      desc: "A high-intensity technical showdown for top performers.",
+      tag: "Trending",
+      image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
+    },
+    {
+      title: "Flagship Event 5",
+      desc: "Compete, collaborate, and conquer cutting-edge challenges.",
+      tag: "Trending",
+      image: "https://images.unsplash.com/photo-1531482615713-2afd69097998",
     },
   ];
 
-  const workshops = [
-    {
-      title: "AI Workshop",
-      desc: "Hands-on AI & ML workshop with real projects.",
-      tag: "Workshop",
-    },
-    {
-      title: "Cyber Security Lab",
-      desc: "Live hacking & defense techniques.",
-      tag: "Workshop",
-    },
-    {
-      title: "UI/UX Bootcamp",
-      desc: "Design systems, Figma & prototyping.",
-      tag: "Workshop",
-    },
-  ];
+ const workshops = [
+  {
+    title: "AI Workshop",
+    desc: "Hands-on AI & ML workshop with real projects.",
+    tag: "Workshop",
+    image: "https://images.unsplash.com/photo-1581091870627-3a9c8c5c9b6b",
+  },
+  {
+    title: "Cyber Security Lab",
+    desc: "Live hacking & defense techniques.",
+    tag: "Workshop",
+    image: "https://images.unsplash.com/photo-1510511459019-5dda7724fd87",
+  },
+  {
+    title: "UI/UX Bootcamp",
+    desc: "Design systems, Figma & prototyping.",
+    tag: "Workshop",
+    image: "https://images.unsplash.com/photo-1559028012-481c04fa702d",
+  },
+  {
+    title: "Cloud Computing Workshop",
+    desc: "Deploy, scale, and manage applications on modern cloud platforms.",
+    tag: "Workshop",
+    image: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8",
+  },
+  {
+    title: "Blockchain & Web3 Lab",
+    desc: "Build decentralized apps and understand smart contracts.",
+    tag: "Workshop",
+    image: "https://images.unsplash.com/photo-1621504450181-5d356f61d307",
+  },
+];
+
 
   return (
     <section className="relative py-28 bg-black overflow-hidden">

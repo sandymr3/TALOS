@@ -51,21 +51,22 @@ button,
 .animate-infinite-scroll {
   animation: infinite-scroll 30s linear infinite;
 }
-@keyframes scroll-left {
+@keyframes marquee-left {
   from {
     transform: translateX(0);
   }
   to {
-    transform: translateX(-50%);
+    transform: translateX(-100%);
   }
 }
 
-@keyframes scroll-right {
+@keyframes marquee-right {
   from {
-    transform: translateX(-50%);
+    transform: translateX(-100%);
   }
   to {
     transform: translateX(0);
   }
 }
+
 
