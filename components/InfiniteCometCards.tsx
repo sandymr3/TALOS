@@ -63,11 +63,11 @@ export function InfiniteCometCards({
                     </span>
                   )}
 
-                  <h3 className="text-2xl font-bold text-white mb-3">
+                  <h3 className="text-3xl text-white mb-3 righteous-regular">
                     {item.title}
                   </h3>
 
-                  <p className="text-base text-white/65 leading-relaxed">
+                  <p className="text-base text-white/65 leading-relaxed ibm-plex-mono-semibold">
                     {item.desc}
                   </p>
                 </div>

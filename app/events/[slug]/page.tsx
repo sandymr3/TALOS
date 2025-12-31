@@ -1,7 +1,8 @@
 import PageSection from '@/components/_core/layout/PageSection';
 import Link from 'next/link';
 
-export default function EventDetailPage({ params }: { params: { slug: string } }) {
+export default async function EventDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
   return (
     <PageSection title='Event Details' className='min-h-screen'>
       <div className='max-w-4xl mx-auto'>
@@ -16,7 +17,7 @@ export default function EventDetailPage({ params }: { params: { slug: string } }
               <div className='prose prose-invert max-w-none'>
                  <h3 className='text-xl font-bold text-primary mb-4'>Description</h3>
                  <p className='text-muted-foreground leading-relaxed'>
-                   This is a placeholder description for the event. In a real application, this would fetch data based on the slug: <span className='font-mono text-white'>{params.slug}</span>.
+                   This is a placeholder description for the event. In a real application, this would fetch data based on the slug: <span className='font-mono text-white'>{slug}</span>.
                  </p>
                  <p className='text-muted-foreground leading-relaxed'>
                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.

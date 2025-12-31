@@ -2,7 +2,7 @@
 
 import PageSection from "@/components/_core/layout/PageSection";
 import Link from "next/link";
-import { CometCard } from "@/components/ui/comet-card";
+import { FlipCard } from "@/components/ui/FlipCard";
 
 export default function EventsPage() {
   const events = [
@@ -12,6 +12,7 @@ export default function EventsPage() {
       desc: "Capture the flag and secure the network.",
       category: "Technical",
       slug: "cyber-security-hunt",
+      image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=800&auto=format&fit=crop"
     },
     {
       title: "Code Marathon",
@@ -19,6 +20,7 @@ export default function EventsPage() {
       desc: "24-hour non-stop coding challenge.",
       category: "Coding",
       slug: "code-marathon",
+      image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=800&auto=format&fit=crop"
     },
     {
       title: "Robo Wars",
@@ -26,6 +28,7 @@ export default function EventsPage() {
       desc: "Battle of the bots. May the best bot win.",
       category: "Robotics",
       slug: "robo-wars",
+      image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=800&auto=format&fit=crop"
     },
     {
       title: "Design Dash",
@@ -33,6 +36,7 @@ export default function EventsPage() {
       desc: "UI/UX challenge for creative minds.",
       category: "Design",
       slug: "design-dash",
+      image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=800&auto=format&fit=crop"
     },
     {
       title: "Tech Quiz",
@@ -40,6 +44,7 @@ export default function EventsPage() {
       desc: "Test your knowledge across various tech domains.",
       category: "Quiz",
       slug: "tech-quiz",
+      image: "https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?q=80&w=800&auto=format&fit=crop"
     },
     {
       title: "Project Expo",
@@ -47,6 +52,7 @@ export default function EventsPage() {
       desc: "Showcase your innovative projects.",
       category: "Expo",
       slug: "project-expo",
+      image: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800&auto=format&fit=crop"
     },
   ];
 
@@ -54,50 +60,45 @@ export default function EventsPage() {
     <PageSection title="Events" className="min-h-screen">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {events.map((event) => (
-          <CometCard key={event.slug}>
-            <Link href={`/events/${event.slug}`} className="block">
-              <div
-                className="group relative bg-muted/30 border border-white/10 rounded-xl overflow-hidden
-                           transition-all duration-300
-                           hover:border-primary/50
-                           hover:shadow-[0_0_20px_rgba(220,38,38,0.2)]"
-              >
-                {/* TOP */}
-                <div className="h-40 bg-gradient-to-br from-gray-900 to-black flex items-center justify-center relative overflow-hidden">
-                  <div
-                    className="absolute inset-0 opacity-20
-                               bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))]
-                               from-red-500/20 to-transparent
-                               scale-150 group-hover:scale-125 transition-transform duration-500"
-                  />
-                  <span className="text-4xl text-white/10 font-black uppercase tracking-widest">
-                    {event.category}
+          <FlipCard
+            key={event.slug}
+            backContent={
+              <div className="flex min-h-full flex-col gap-2">
+                <h1 className="text-3xl font-bold text-red-600 zen-dots-regular">{event.title}</h1>
+                <p className="mt-1 border-t border-t-gray-200/20 py-4 text-base leading-normal ibm-plex-mono-semibold text-gray-300">
+                  {event.desc}
+                </p>
+                <div className="mt-auto flex flex-col gap-4">
+                  <span className="w-fit text-xs font-mono text-red-500 bg-red-500/10 px-2 py-1 rounded">
+                    {event.date}
                   </span>
-                </div>
-
-                {/* CONTENT */}
-                <div className="p-6">
-                  <div className="mb-4">
-                    <span className="text-xs font-mono text-primary bg-primary/10 px-2 py-1 rounded">
-                      {event.date}
-                    </span>
-                  </div>
-
-                  <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
-                    {event.title}
-                  </h3>
-
-                  <p className="text-muted-foreground text-sm mb-6">
-                    {event.desc}
-                  </p>
-
-                  <div className="inline-flex items-center text-sm font-semibold text-white group-hover:text-primary transition-colors">
-                    View Details <span className="ml-2">→</span>
-                  </div>
+                  <Link 
+                    href={`/events/${event.slug}`} 
+                    className="w-full text-center px-4 py-2 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 transition-colors zen-dots-regular text-xl"
+                  >
+                    View Details
+                  </Link>
                 </div>
               </div>
-            </Link>
-          </CometCard>
+            }
+          >
+            <div className="relative h-full w-full">
+              <img
+                src={event.image}
+                alt={event.title}
+                className="size-full rounded-2xl object-cover shadow-2xl shadow-black/40"
+              />
+              <div className="absolute inset-0 bg-black/30 rounded-2xl" />
+              <div className="absolute bottom-4 left-4 text-3xl font-bold text-white drop-shadow-md zen-dots-regular">
+                {event.title}
+              </div>
+              <div className="absolute top-4 right-4">
+                 <span className="text-xs font-bold bg-black/50 backdrop-blur-md text-white px-2 py-1 rounded border border-white/10">
+                    {event.category}
+                 </span>
+              </div>
+            </div>
+          </FlipCard>
         ))}
       </div>
     </PageSection>

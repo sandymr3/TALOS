@@ -8,6 +8,7 @@ import {
 } from "motion/react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export const FloatingNav = ({
   navItems,
@@ -21,6 +22,7 @@ export const FloatingNav = ({
   className?: string;
 }) => {
   const { scrollY } = useScroll();
+  const pathname = usePathname();
   const [visible, setVisible] = useState(false);
 
   useMotionValueEvent(scrollY, "change", (current) => {
@@ -51,27 +53,31 @@ export const FloatingNav = ({
           ease: "easeInOut",
         }}
         className={cn(
-          "flex w-full fixed top-0 inset-x-0 border-b border-red-600/30 bg-black/90 backdrop-blur-md shadow-[0px_2px_15px_-1px_rgba(220,38,38,0.2)] z-[5000] px-8 py-4 items-center justify-between",
+          "flex w-full fixed top-0 inset-x-0 border-b border-red-600/30 bg-black/90 backdrop-blur-md shadow-[0px_2px_15px_-1px_rgba(220,38,38,0.2)] z-[5000] px-8 py-6 items-center justify-between",
           className
         )}
       >
         <Link href="/" className="font-black text-xl tracking-tighter text-white hover:text-red-500 transition-colors">
-          TALOS <span className="text-red-600">2026</span>
+          TALOS <span className="text-red-600 zen-dots-regular neon-text-red">5.0</span>
         </Link>
 
         <div className="flex items-center justify-center space-x-6">
-          {navItems.map((navItem, idx: number) => (
-            <Link
-              key={`link=${idx}`}
-              href={navItem.link}
-              className={cn(
-                "relative items-center flex space-x-1 text-neutral-200 hover:text-red-500 transition-colors font-bold"
-              )}
-            >
-              <span className="block sm:hidden">{navItem.icon}</span>
-              <span className="hidden sm:block text-sm">{navItem.name}</span>
-            </Link>
-          ))}
+          {navItems.map((navItem, idx: number) => {
+            const isActive = pathname === navItem.link || (pathname.startsWith(navItem.link) && navItem.link !== '/');
+            return (
+              <Link
+                key={`link=${idx}`}
+                href={navItem.link}
+                className={cn(
+                  "relative items-center flex space-x-1 transition-colors font-bold zen-dots-regular",
+                  isActive ? "text-red-500" : "text-neutral-200 hover:text-red-500"
+                )}
+              >
+                <span className="block sm:hidden">{navItem.icon}</span>
+                <span className="hidden sm:block text-xl">{navItem.name}</span>
+              </Link>
+            );
+          })}
         </div>
 
         <Link
