@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Press_Start_2P, IBM_Plex_Mono } from "next/font/google";
+import { Press_Start_2P, Orbitron, Wallpoet } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/_core/navbar/Navbar";
 import Footer from "@/components/_core/footer/Footer";
@@ -13,10 +13,16 @@ const pressStart2P = Press_Start_2P({
   variable: "--font-press-start-2p",
 });
 
-const ibmPlexMono = IBM_Plex_Mono({
-  weight: ["400", "600"],
+const orbitron = Orbitron({
+  weight: ["400", "500", "700", "900"],
   subsets: ["latin"],
-  variable: "--font-ibm-plex-mono",
+  variable: "--font-orbitron",
+});
+
+const wallpoet = Wallpoet({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-wallpoet",
 });
 
 export const metadata: Metadata = {
@@ -31,7 +37,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`min-h-screen flex flex-col ${pressStart2P.variable} ${ibmPlexMono.variable}`}>
+      <body className={`min-h-screen flex flex-col ${pressStart2P.variable} ${orbitron.variable} ${wallpoet.variable}`}>
         <CustomCursor />
         <Ribbons
           baseThickness={15}
