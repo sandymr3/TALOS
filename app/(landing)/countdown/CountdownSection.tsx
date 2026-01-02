@@ -26,7 +26,7 @@ function FlipUnit({ value, label, opacityLabel }: { value: number; label: string
     // Ghost numbers to create the "digital clock" empty segment effect
     const ghost = "~~";
 
-    const baseTextClass = "absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 italic text-2xl md:text-7xl tracking-widest leading-none font-dseg";
+    const baseTextClass = "absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 italic text-lg md:text-4xl tracking-widest leading-none font-dseg";
 
     // Active text with intense glow
     const textClass = `${baseTextClass} text-[#ff0000] drop-shadow-[0_0_15px_rgba(255,0,0,0.9)] z-10`;
@@ -37,7 +37,7 @@ function FlipUnit({ value, label, opacityLabel }: { value: number; label: string
     return (
         <div className="flex flex-col items-center group">
             {/* LED Display Panel */}
-            <div className="w-16 h-20 md:w-52 md:h-64 relative bg-black border-4 border-[#1a1a1a] rounded-sm shadow-[inset_0_0_20px_rgba(0,0,0,0.8)] overflow-hidden">
+            <div className="w-10 h-14 md:w-24 md:h-32 relative bg-black border-4 border-[#1a1a1a] rounded-sm shadow-[inset_0_0_20px_rgba(0,0,0,0.8)] overflow-hidden">
                 {/* Inner shadow/glare overlay */}
                 <div className="absolute inset-0 pointer-events-none z-20 bg-[linear-gradient(180deg,rgba(255,255,255,0.03)_0%,transparent_50%,rgba(0,0,0,0.2)_100%)]"></div>
 
@@ -52,7 +52,7 @@ function FlipUnit({ value, label, opacityLabel }: { value: number; label: string
 
             <motion.span
                 style={{ opacity: opacityLabel }}
-                className="mt-4 text-[10px] md:text-xl uppercase text-red-500 font-bold tracking-[0.2em] font-orbitron drop-shadow-md"
+                className="mt-2 text-[8px] md:text-base uppercase text-red-500 font-bold tracking-[0.2em] font-orbitron drop-shadow-md"
             >
                 {label}
             </motion.span>
@@ -69,6 +69,7 @@ export default function CountdownSection() {
     const triggerRef = useRef<HTMLDivElement>(null);
     const { scrollY } = useScroll();
     const [originY, setOriginY] = useState(0);
+    const [sectionHeight, setSectionHeight] = useState(0);
     const [navHeight, setNavHeight] = useState(0);
 
     useEffect(() => {
@@ -84,6 +85,7 @@ export default function CountdownSection() {
                 const safeNavHeight = Math.max(navbarHeight, 90);
 
                 setOriginY(rect.top + window.scrollY);
+                setSectionHeight(rect.height);
                 setNavHeight(safeNavHeight);
             }
         };
@@ -113,14 +115,18 @@ export default function CountdownSection() {
 
     const scrollRange = [0, triggerStart, triggerEnd];
 
+    // Center Y position
+    const centerY = originY + sectionHeight / 2;
+
     // Top position: 
-    // At 0 scroll: originY (absolute pos)
-    // At triggerStart: originY - triggerStart (visually same place)
+    // At 0 scroll: centerY (absolute pos)
+    // At triggerStart: centerY - triggerStart (visually same place)
     // At triggerEnd: navHeight + 20 (new fixed pos)
-    const topPos = useTransform(scrollY, scrollRange, [originY, originY - triggerStart, navHeight + 20]);
+    const topPos = useTransform(scrollY, scrollRange, [centerY, centerY - triggerStart, navHeight + 20]);
 
     const right = useTransform(scrollY, scrollRange, ["50%", "50%", "2%"]);
     const translateX = useTransform(scrollY, scrollRange, ["50%", "50%", "0%"]);
+    const y = useTransform(scrollY, scrollRange, ["-50%", "-50%", "0%"]);
     const scale = useTransform(scrollY, scrollRange, [1, 1, 0.3]);
 
     // Fade out label earlier in the transition
@@ -129,7 +135,7 @@ export default function CountdownSection() {
     return (
         <>
             {/* Placeholder to reserve space and measure position */}
-            <div ref={triggerRef} className="w-full h-[180px] md:h-[220px] relative bg-neutral-950 border-y border-red-900/30 overflow-hidden">
+            <div ref={triggerRef} className="w-full h-[180px] md:h-[280px] relative bg-neutral-950 border-y border-red-900/30 overflow-hidden">
                 <div className="absolute inset-0 opacity-20 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px]"></div>
                 <div className="absolute inset-0 bg-[radial-gradient(circle_600px_at_50%_50%,#00000000,#000000)]"></div>
             </div>
@@ -140,6 +146,7 @@ export default function CountdownSection() {
                     top: isMounted ? topPos : undefined,
                     right,
                     translateX,
+                    y,
                     scale,
                     zIndex: 50,
                     transformOrigin: "right top",
@@ -163,7 +170,7 @@ export default function CountdownSection() {
                             />
                             {/* Add blinking colon if not the last item */}
                             {index < labelMap.length - 1 && (
-                                <div className="text-red-500 text-lg md:text-6xl font-dseg animate-pulse mb-8 md:mb-12 mx-0.5 md:mx-2 drop-shadow-[0_0_10px_rgba(255,0,0,0.8)]">
+                                <div className="text-red-500 text-sm md:text-3xl font-dseg animate-pulse mb-6 md:mb-8 mx-0.5 md:mx-2 drop-shadow-[0_0_10px_rgba(255,0,0,0.8)]">
                                     :
                                 </div>
                             )}
