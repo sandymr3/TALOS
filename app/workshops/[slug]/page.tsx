@@ -22,12 +22,12 @@ export default async function WorkshopDetailPage({ params }: { params: Promise<{
         <div className='grid md:grid-cols-3 gap-8'>
            <div className='md:col-span-2 space-y-8'>
               <div className='prose prose-invert max-w-none'>
-                 <h3 className='text-xl font-bold text-primary mb-4'>Overview</h3>
-                 <p className='text-muted-foreground leading-relaxed'>
+                 <h3 className='text-3xl md:text-4xl font-bold font-zen-dots text-[#dc2626] mb-4'>Overview</h3>
+                 <p className='text-muted-foreground leading-relaxed font-ibm-plex-mono text-lg font-bold'>
                    This is a placeholder description for the workshop. Learn from industry experts and get hands-on experience. Slug: <span className='font-mono text-white'>{slug}</span>.
                  </p>
-                 <h3 className='text-xl font-bold text-primary mb-4 mt-8'>Curriculum</h3>
-                 <p className='text-muted-foreground leading-relaxed'>
+                 <h3 className='text-3xl md:text-4xl font-bold font-zen-dots text-[#dc2626] mb-4 mt-8'>Curriculum</h3>
+                 <p className='text-muted-foreground leading-relaxed font-ibm-plex-mono text-lg font-bold'>
                    We will cover the basics to advanced concepts. Bring your laptop and enthusiasm.
                  </p>
               </div>
@@ -35,8 +35,8 @@ export default async function WorkshopDetailPage({ params }: { params: Promise<{
            
            <div className='space-y-6'>
               <div className='bg-muted/20 p-6 rounded-xl border border-white/5'>
-                 <h4 className='font-bold text-white mb-4'>Details</h4>
-                 <div className='space-y-4 text-sm'>
+                 <h4 className='text-xl font-bold font-zen-dots text-[#dc2626] mb-4'>Details</h4>
+                 <div className='space-y-4 text-base font-bold font-ibm-plex-mono'>
                     <div className='flex justify-between'>
                        <span className='text-gray-500'>Date</span>
                        <span className='text-white'>Feb 15, 2025</span>
@@ -51,7 +51,7 @@ export default async function WorkshopDetailPage({ params }: { params: Promise<{
                     </div>
                  </div>
                  
-                 <Link href='/register' className='block w-full text-center bg-primary text-white py-3 rounded-lg font-bold mt-6 hover:bg-red-700 transition-colors'>
+                 <Link href='/register' className='block w-full text-center bg-primary text-white py-3 rounded-lg font-bold text-sm mt-6 hover:bg-red-700 transition-all shadow-[0_0_15px_rgba(220,38,38,0.5)] hover:shadow-[0_0_25px_rgba(220,38,38,0.8)]'>
                     Register for Workshop
                  </Link>
               </div>

@@ -1,7 +1,6 @@
 /* Tailwind v4 entry */
 @import url('https://fonts.googleapis.com/css2?family=BBH+Bartle&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 @import "tailwindcss";
 
@@ -36,9 +35,17 @@ body {
 }
 
 .ibm-plex-mono-semibold {
-  font-family: "IBM Plex Mono", monospace;
+  font-family: var(--font-ibm-plex-mono), monospace;
   font-weight: 600;
   font-style: normal;
+}
+
+.font-ibm-plex-mono {
+  font-family: var(--font-ibm-plex-mono), monospace;
+}
+
+.font-zen-dots {
+  font-family: "Zen Dots", sans-serif;
 }
 
 .righteous-regular {
