@@ -23,21 +23,36 @@ const getTimeLeft = (targetDate: number): TimeLeft => {
 
 function FlipUnit({ value, label, opacityLabel }: { value: number; label: string; opacityLabel?: any }) {
     const padded = String(value).padStart(2, "0");
-    const textClass = "absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl md:text-6xl font-extrabold text-white tracking-wide leading-none";
+    // Ghost numbers to create the "digital clock" empty segment effect
+    const ghost = "~~";
+
+    const baseTextClass = "absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 italic text-2xl md:text-7xl tracking-widest leading-none font-dseg";
+
+    // Active text with intense glow
+    const textClass = `${baseTextClass} text-[#ff0000] drop-shadow-[0_0_15px_rgba(255,0,0,0.9)] z-10`;
+
+    // Ghost text (inactive segments)
+    const ghostClass = `${baseTextClass} text-[#2a0a0a] z-0 select-none opacity-100`;
 
     return (
-        <div className="flex flex-col items-center">
-            <div className="w-16 h-20 md:w-24 md:h-32 rounded-lg shadow-lg overflow-hidden relative bg-black border border-white/10">
-                <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-red-500 to-red-700" />
-                <div className="absolute inset-x-0 bottom-0 h-1/2 bg-zinc-900" />
-                <span className={textClass} style={{ clipPath: "inset(0 0 50% 0)" }}>{padded}</span>
-                <span className={textClass} style={{ clipPath: "inset(50% 0 0 0)" }}>{padded}</span>
-                <div className="absolute left-0 right-0 top-1/2 h-[1px] bg-black/50" />
+        <div className="flex flex-col items-center group">
+            {/* LED Display Panel */}
+            <div className="w-16 h-20 md:w-52 md:h-64 relative bg-black border-4 border-[#1a1a1a] rounded-sm shadow-[inset_0_0_20px_rgba(0,0,0,0.8)] overflow-hidden">
+                {/* Inner shadow/glare overlay */}
+                <div className="absolute inset-0 pointer-events-none z-20 bg-[linear-gradient(180deg,rgba(255,255,255,0.03)_0%,transparent_50%,rgba(0,0,0,0.2)_100%)]"></div>
+
+                <div className="w-full h-full relative flex items-center justify-center transform -skew-x-6 scale-90">
+                    {/* Ghost Segments */}
+                    <span className={ghostClass}>{ghost}</span>
+
+                    {/* Active Segments */}
+                    <span className={textClass}>{padded}</span>
+                </div>
             </div>
 
             <motion.span
                 style={{ opacity: opacityLabel }}
-                className="mt-2 text-[10px] md:text-sm uppercase text-red-300 tracking-wider"
+                className="mt-4 text-[10px] md:text-xl uppercase text-red-500 font-bold tracking-[0.2em] font-orbitron drop-shadow-md"
             >
                 {label}
             </motion.span>
@@ -65,9 +80,11 @@ export default function CountdownSection() {
                 const rect = triggerRef.current.getBoundingClientRect();
                 const navbar = document.getElementById("floating-navbar");
                 const navbarHeight = navbar ? navbar.offsetHeight : 0;
+                // Use a fallback height of 90 if navbarHeight is 0 or surprisingly small
+                const safeNavHeight = Math.max(navbarHeight, 90);
 
                 setOriginY(rect.top + window.scrollY);
-                setNavHeight(navbarHeight);
+                setNavHeight(safeNavHeight);
             }
         };
 
@@ -84,18 +101,38 @@ export default function CountdownSection() {
     const labelMap = Object.entries(time);
 
     // Animation Transforms
-    const scrollRange = [0, 300];
-    const topPos = useTransform(scrollY, scrollRange, [originY, navHeight + 10]);
+    // Animation Transforms
+    // Trigger animation when the section is about to leave the viewport (scrolled past)
+    // Adjust offset to control when it moves. originY is element's page top.
+    const triggerStart = Math.max(0, originY - 400);
+    const triggerEnd = triggerStart + 400;
 
-    const right = useTransform(scrollY, scrollRange, ["50%", "2%"]);
-    const translateX = useTransform(scrollY, scrollRange, ["50%", "0%"]);
-    const scale = useTransform(scrollY, scrollRange, [1, 0.4]);
-    const opacityLabel = useTransform(scrollY, [0, 150], [1, 0]);
+    // [0, triggerStart, triggerEnd]
+    // 0 -> triggerStart: "Sticky" phase (simulated by top decreasing)
+    // triggerStart -> triggerEnd: Animation phase (moves to top-right)
+
+    const scrollRange = [0, triggerStart, triggerEnd];
+
+    // Top position: 
+    // At 0 scroll: originY (absolute pos)
+    // At triggerStart: originY - triggerStart (visually same place)
+    // At triggerEnd: navHeight + 20 (new fixed pos)
+    const topPos = useTransform(scrollY, scrollRange, [originY, originY - triggerStart, navHeight + 20]);
+
+    const right = useTransform(scrollY, scrollRange, ["50%", "50%", "2%"]);
+    const translateX = useTransform(scrollY, scrollRange, ["50%", "50%", "0%"]);
+    const scale = useTransform(scrollY, scrollRange, [1, 1, 0.3]);
+
+    // Fade out label earlier in the transition
+    const opacityLabel = useTransform(scrollY, [triggerStart, triggerStart + 150], [1, 0]);
 
     return (
         <>
             {/* Placeholder to reserve space and measure position */}
-            <div ref={triggerRef} className="w-full h-[180px] md:h-[220px]" />
+            <div ref={triggerRef} className="w-full h-[180px] md:h-[220px] relative bg-neutral-950 border-y border-red-900/30 overflow-hidden">
+                <div className="absolute inset-0 opacity-20 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px]"></div>
+                <div className="absolute inset-0 bg-[radial-gradient(circle_600px_at_50%_50%,#00000000,#000000)]"></div>
+            </div>
 
             <motion.div
                 style={{
@@ -108,7 +145,7 @@ export default function CountdownSection() {
                     transformOrigin: "right top",
                     opacity: isMounted ? 1 : 0
                 }}
-                className="flex flex-col items-center pointer-events-none"
+                className="flex flex-col items-center pointer-events-none w-full md:w-auto"
             >
                 <motion.p
                     style={{ opacity: opacityLabel }}
@@ -117,13 +154,20 @@ export default function CountdownSection() {
                     The Countdown Begins
                 </motion.p>
 
-                <div className="flex justify-center gap-3 md:gap-8">
-                    {labelMap.map(([label, value]) => (
-                        <FlipUnit
-                            key={label}
-                            value={isMounted ? (value as number) : 0}
-                            label={label}
-                        />
+                <div className="flex justify-center items-center gap-0.5 md:gap-4 px-2 w-full">
+                    {labelMap.map(([label, value], index) => (
+                        <div key={label} className="flex items-center">
+                            <FlipUnit
+                                value={isMounted ? (value as number) : 0}
+                                label={label}
+                            />
+                            {/* Add blinking colon if not the last item */}
+                            {index < labelMap.length - 1 && (
+                                <div className="text-red-500 text-lg md:text-6xl font-dseg animate-pulse mb-8 md:mb-12 mx-0.5 md:mx-2 drop-shadow-[0_0_10px_rgba(255,0,0,0.8)]">
+                                    :
+                                </div>
+                            )}
+                        </div>
                     ))}
                 </div>
             </motion.div>

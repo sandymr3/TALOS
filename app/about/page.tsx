@@ -1,28 +1,33 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 
 const timelineEvents = [
   {
     year: "4.0",
     title: "NEURAL NEXUS",
-    description: "TALOS 4.0 explored the power of interconnected thinking. Inspired by neural systems, this edition emphasized collaboration, adaptability, and intelligent problem-solving. Every event reflected how modern technology thrives on connections—between people, data, and ideas."
+    description: "TALOS 4.0 explored the power of interconnected thinking. Inspired by neural systems, this edition emphasized collaboration, adaptability, and intelligent problem-solving. Every event reflected how modern technology thrives on connections—between people, data, and ideas.",
+    image: "/v3.png" // Placeholder/Fallback
   },
   {
     year: "3.0",
     title: "The Shift",
-    description: "TALOS 3.0 changed the game. The focus moved from just learning to doing. Participants were pushed to apply logic, strategy, and teamwork under pressure—mirroring real-world tech environments."
+    description: "TALOS 3.0 changed the game. The focus moved from just learning to doing. Participants were pushed to apply logic, strategy, and teamwork under pressure—mirroring real-world tech environments.",
+    image: "/v3.png"
   },
   {
     year: "2.0",
     title: "The Rise",
-    description: "With growing participation and ambition, TALOS 2.0 elevated the experience. Events became sharper, challenges more competitive, and ideas more fearless. This edition marked TALOS stepping into its identity as a serious technical platform."
+    description: "With growing participation and ambition, TALOS 2.0 elevated the experience. Events became sharper, challenges more competitive, and ideas more fearless. This edition marked TALOS stepping into its identity as a serious technical platform.",
+    image: "/v2.png"
   },
   {
     year: "1.0",
     title: "The Spark",
-    description: "TALOS 1.0 was where everything began. A bold attempt to bring technical curiosity to life, it introduced students to the thrill of innovation, competition, and creative problem-solving. This edition planted the seed for a culture that would grow stronger with every year."
+    description: "TALOS 1.0 was where everything began. A bold attempt to bring technical curiosity to life, it introduced students to the thrill of innovation, competition, and creative problem-solving. This edition planted the seed for a culture that would grow stronger with every year.",
+    image: "/v1.jpeg"
   }
 ];
 
@@ -54,7 +59,31 @@ const imageVariant = {
   }
 };
 
+const TimelineDot = () => {
+  const dotRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: dotRef,
+    offset: ["start 0.55", "start 0.45"]
+  });
+
+  const backgroundColor = useTransform(scrollYProgress, [0, 1], ["#ffffff", "#dc2626"]);
+
+  return (
+    <motion.div
+      ref={dotRef}
+      style={{ backgroundColor }}
+      className="absolute left-[41px] md:left-1/2 top-10 md:top-1/2 w-5 h-5 md:w-6 md:h-6 rounded-full border-4 border-black z-10 shadow-[0_0_10px_rgba(255,255,255,0.5)] -translate-x-1/2 md:-translate-y-1/2"
+    />
+  );
+};
+
 export default function AboutPage() {
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start center", "end center"]
+  });
+
   return (
     <div className="min-h-screen bg-black text-white pt-32 pb-20 px-4 md:px-12 overflow-x-hidden">
       <div className="max-w-6xl mx-auto">
@@ -89,6 +118,7 @@ export default function AboutPage() {
 
         {/* Timeline Section */}
         <motion.div
+          ref={containerRef}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
@@ -96,10 +126,20 @@ export default function AboutPage() {
           className="relative space-y-24"
         >
           {/* Centered Vertical Line - Desktop Only */}
-          <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-0.5 bg-zinc-800 -translate-x-1/2" />
+          <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-0.5 bg-zinc-800 -translate-x-1/2">
+            <motion.div
+              style={{ scaleY: scrollYProgress }}
+              className="absolute top-0 left-0 w-full h-full bg-red-600 origin-top"
+            />
+          </div>
 
           {/* Left Vertical Line - Mobile Only */}
-          <div className="md:hidden absolute left-[41px] top-0 bottom-0 w-0.5 bg-zinc-800" />
+          <div className="md:hidden absolute left-[41px] top-0 bottom-0 w-0.5 bg-zinc-800">
+            <motion.div
+              style={{ scaleY: scrollYProgress }}
+              className="absolute top-0 left-0 w-full h-full bg-red-600 origin-top"
+            />
+          </div>
 
           {timelineEvents.map((event, index) => (
             <motion.div
@@ -108,7 +148,7 @@ export default function AboutPage() {
               className="relative"
             >
               {/* Timeline Dot */}
-              <div className="absolute left-[41px] md:left-1/2 top-10 md:top-1/2 w-5 h-5 md:w-6 md:h-6 bg-white rounded-full border-4 border-black z-10 shadow-[0_0_10px_rgba(255,255,255,0.5)] -translate-x-1/2 md:-translate-y-1/2" />
+              <TimelineDot />
 
               <div className={`flex flex-col gap-8 md:gap-0 items-center justify-between pl-[80px] md:pl-0 ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
 
@@ -118,7 +158,7 @@ export default function AboutPage() {
                   className="w-full md:w-[42%] relative aspect-video rounded-xl overflow-hidden border border-zinc-800 shadow-2xl group"
                 >
                   <Image
-                    src="/v1.jpeg"
+                    src={event.image}
                     alt={`Talos ${event.year}`}
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0"

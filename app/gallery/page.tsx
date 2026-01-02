@@ -24,6 +24,12 @@ export default function GalleryPage() {
   return (
     <div className='min-h-screen pt-32 pb-12 bg-black relative z-10'>
       
+      <div className="max-w-7xl mx-auto px-4 mb-12 text-center">
+        <h1 className="text-3xl md:text-5xl text-white tracking-tighter uppercase bbh-bartle-regular">
+          TALOS <span className="text-[#dc2626]">MEMORIES</span>
+        </h1>
+      </div>
+
       {/* Top Grid Section - Exact Half-Half Split */}
       <div className="w-full max-w-7xl mx-auto mb-12 px-4 grid grid-cols-1 lg:grid-cols-2 gap-4 items-stretch">
         
