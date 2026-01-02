@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Container from '@/components/_core/layout/Container';
-import DecryptedText from '@/components/ui/DecryptedText';
+ import DecryptedText from '@/components/ui/DecryptedText';
 
 export default function HeroSection() {
   return (
