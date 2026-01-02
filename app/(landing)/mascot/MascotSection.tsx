@@ -54,7 +54,7 @@ export default function MascotSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.8, ease: "easeOut" }}
             >
-              <h3 className="text-red-500 bbh-bartle-black tracking-[0.4em] text-sm md:text-xl mb-4">
+              <h3 className="text-white bbh-bartle-black tracking-[0.4em] text-sm md:text-xl mb-4">
                 WE ARE
               </h3>
 
@@ -62,7 +62,7 @@ export default function MascotSection() {
                 TALOS
               </h2>
 
-              <p className="text-gray-300 font-medium leading-relaxed text-sm md:text-lg max-w-xl mx-auto md:mx-0">
+              <p className="text-gray-300 font-medium zen-dots-regular leading-relaxed text-sm md:text-lg max-w-xl mx-auto md:mx-0">
                 <span className="text-white font-bold">TALOS</span> – <span className="text-red-500"> Towards
                   Advance Level Of Science</span> is an annual occurrence conducted by the
                 Department of Artificial Intelligence and Data Science to showcase
