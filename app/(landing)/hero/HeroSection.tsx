@@ -1,12 +1,12 @@
 import Link from 'next/link';
 import Container from '@/components/_core/layout/Container';
- import DecryptedText from '@/components/ui/DecryptedText';
+import DecryptedText from '@/components/ui/DecryptedText';
+import HolographicWave from '@/components/ui/HolographicWave';
 
 export default function HeroSection() {
   return (
     <section className='relative h-screen flex items-center justify-center overflow-hidden'>
-      {/* Background with Red Glow */}
-      <div className='absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-red-900/20 via-black to-black -z-10' />
+      <HolographicWave />
       
       <Container className='text-center z-10'>
         
