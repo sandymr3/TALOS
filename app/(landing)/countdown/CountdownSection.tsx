@@ -126,7 +126,7 @@ export default function CountdownSection() {
     const right = useTransform(scrollY, scrollRange, ["50%", "50%", "2%"]);
     const translateX = useTransform(scrollY, scrollRange, ["50%", "50%", "0%"]);
     const y = useTransform(scrollY, scrollRange, ["-50%", "-50%", "0%"]);
-    const scale = useTransform(scrollY, scrollRange, [1, 1, 0.3]);
+    const scale = useTransform(scrollY, scrollRange, [1, 1, 0.4]);
 
     // Fade out label earlier in the transition
     const opacityLabel = useTransform(scrollY, [triggerStart, triggerStart + 150], [1, 0]);
