@@ -8,7 +8,7 @@ export function CometCard({ children }: { children: React.ReactNode }) {
 
   // ✅ Ensure client-only rendering
   useEffect(() => {
-    setMounted(true);
+    setTimeout(() => setMounted(true), 0);
   }, []);
 
   function handleMouseMove(e: React.MouseEvent) {

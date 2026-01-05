@@ -1,3 +1,5 @@
+'use client';
+
 import HeroSection from "./(landing)/hero/HeroSection";
 import CountdownSection from "./(landing)/countdown/CountdownSection";
 import MascotSection from "./(landing)/mascot/MascotSection";
