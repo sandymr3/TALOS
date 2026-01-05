@@ -23,8 +23,14 @@ const IMGS = [
   "https://images.unsplash.com/photo-1575089976121-8ed7b2a54265?q=80&w=3556&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
 ];
 
-const RollingGallery = ({ autoplay = false, pauseOnHover = false, images = [] }) => {
-  images = images.length > 0 ? images : IMGS;
+interface RollingGalleryProps {
+  autoplay?: boolean;
+  pauseOnHover?: boolean;
+  images?: string[];
+}
+
+const RollingGallery = ({ autoplay = false, pauseOnHover = false, images = [] }: RollingGalleryProps) => {
+  const galleryImages = images.length > 0 ? images : IMGS;
   
   const [isScreenSizeSm, setIsScreenSizeSm] = useState<boolean>(false);
   useEffect(() => {
@@ -35,7 +41,7 @@ const RollingGallery = ({ autoplay = false, pauseOnHover = false, images = [] })
   }, []);
 
   const cylinderWidth = isScreenSizeSm ? 1100 : 1800;
-  const faceCount = images.length;
+  const faceCount = galleryImages.length;
   const faceWidth = cylinderWidth / faceCount;
   const radius = cylinderWidth / (2 * Math.PI);
   const dragFactor = 0.05;
@@ -107,7 +113,7 @@ const RollingGallery = ({ autoplay = false, pauseOnHover = false, images = [] })
             }
           }}
         >
-          {images.map((url, i) => (
+          {galleryImages.map((url, i) => (
             <div
               key={i}
               className="group absolute top-1/2 left-1/2 flex h-[300px] w-[350px] -translate-x-1/2 -translate-y-1/2 items-center justify-center p-[6%] [backface-visibility:hidden]"
