@@ -59,7 +59,7 @@ export default async function EventDetailPage({ params }: { params: Promise<{ sl
                     </div>
                  </div>
                  
-                 <Link href='/register' className='block w-full text-center bg-primary text-white py-3 rounded-lg font-bold text-sm mt-6 hover:bg-red-700 transition-all shadow-[0_0_15px_rgba(220,38,38,0.5)] hover:shadow-[0_0_25px_rgba(220,38,38,0.8)]'>
+                 <Link href={`/register/${slug}`} className='block w-full text-center bg-primary text-white py-3 rounded-lg font-bold text-sm mt-6 hover:bg-red-700 transition-all shadow-[0_0_15px_rgba(220,38,38,0.5)] hover:shadow-[0_0_25px_rgba(220,38,38,0.8)]'>
                     Register Now
                  </Link>
               </div>

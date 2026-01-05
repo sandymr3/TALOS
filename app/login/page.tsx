@@ -13,9 +13,10 @@ export default function LoginPage() {
     }
     try {
       await signInWithPopup(auth, googleProvider);
-      window.location.href = '/'; // Redirect after login
+      window.location.href = '/'; // Redirect to home after login
     } catch (error) {
       console.error(error);
+      alert('Login failed. Please try again.');
     }
   };
 

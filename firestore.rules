@@ -1,0 +1,43 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper function to check if user is logged in
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    // 1. Users Collection
+    // Allow users to read and write only their own profile
+    match /users/{userId} {
+      allow read, write: if isSignedIn() && request.auth.uid == userId;
+    }
+
+    // 2. Events Collection
+    // Allow everyone to view event details
+    match /events/{eventId} {
+      allow read: if true;
+      // Restrict writing events to admins only (or disable from client)
+      allow write: if false; 
+    }
+
+    // 3. Registration Collections (e.g., 'hackathon_registrations', 'workshop_registrations')
+    // Since your app creates dynamic collections for each event, we use a wildcard match.
+    match /{collectionId}/{document=**} {
+      
+      // Allow reading if the user owns the registration
+      allow read: if isSignedIn() && (
+        resource.data.userId == request.auth.uid || 
+        resource.data.userEmail == request.auth.token.email
+      );
+
+      // Allow creating a new registration if the user is logged in
+      // and tagging it with their own User ID
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+      
+      // Allow updating/deleting only their own registrations
+      allow update, delete: if isSignedIn() && resource.data.userId == request.auth.uid;
+    }
+  }
+}
