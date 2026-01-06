@@ -1,10 +1,25 @@
 'use client';
 
+import { useEffect } from 'react';
 import { signInWithPopup } from 'firebase/auth';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { auth, googleProvider } from '@/lib/firebase';
+import { useAuth } from '@/hooks/useAuth';
 import PageSection from '@/components/_core/layout/PageSection';
 
 export default function LoginPage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const { user, loading } = useAuth();
+  
+  const redirectTo = searchParams.get('redirect') || '/';
+
+  useEffect(() => {
+    if (!loading && user) {
+      router.push(redirectTo);
+    }
+  }, [user, loading, router, redirectTo]);
+
   const handleLogin = async () => {
     if (!auth) {
       console.error("Firebase auth is not initialized. Please check your environment variables.");
@@ -13,11 +28,25 @@ export default function LoginPage() {
     }
     try {
       await signInWithPopup(auth, googleProvider);
-      window.location.href = '/'; // Redirect after login
+      router.push(redirectTo);
     } catch (error) {
       console.error(error);
     }
   };
+
+  if (loading) {
+    return (
+      <PageSection title="Login" className="min-h-[70vh] flex items-center justify-center">
+        <div className="flex items-center justify-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-red-600"></div>
+        </div>
+      </PageSection>
+    );
+  }
+
+  if (user) {
+    return null; // Will redirect via useEffect
+  }
 
   return (
     <PageSection title="Login" className="min-h-[70vh] flex items-center justify-center">

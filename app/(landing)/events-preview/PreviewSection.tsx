@@ -1,70 +1,41 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Container from "@/components/_core/layout/Container";
 import PerspectiveCarousel from "@/components/ui/PerspectiveCarousel";
+import { api, type Event } from "@/lib/api";
 
 export default function PreviewSection() {
-  const allItems = [
-    {
-      title: "Flagship Event 1",
-      desc: "Experience the thrill of competition with our headline event.",
-      tag: "Technical",
-      image: "https://images.unsplash.com/photo-1526378722484-bd91ca387e72",
-    },
-    {
-      title: "Flagship Event 2",
-      desc: "Battle the best minds in our elite challenge.",
-      tag: "Innovation",
-      image: "https://images.unsplash.com/photo-1518770660439-4636190af475",
-    },
-    {
-      title: "Flagship Event 3",
-      desc: "Showcase innovation and problem-solving under pressure.",
-      tag: "Analysis",
-      image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d",
-    },
-    {
-      title: "AI Workshop",
-      desc: "Hands-on AI & ML workshop with real projects.",
-      tag: "Tech",
-      image: "https://images.unsplash.com/photo-1581091870627-3a9c8c5c9b6b",
-    },
-    {
-      title: "Cyber Security Lab",
-      desc: "Live hacking & defense techniques.",
-      tag: "Security",
-      image: "https://images.unsplash.com/photo-1510511459019-5dda7724fd87",
-    },
-    {
-      title: "Flagship Event 4",
-      desc: "A high-intensity technical showdown for top performers.",
-      tag: "System",
-      image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
-    },
-    {
-      title: "UI/UX Bootcamp",
-      desc: "Design systems, Figma & prototyping.",
-      tag: "Design",
-      image: "https://images.unsplash.com/photo-1559028012-481c04fa702d",
-    },
-    {
-      title: "Flagship Event 5",
-      desc: "Compete, collaborate, and conquer cutting-edge challenges.",
-      tag: "Future",
-      image: "https://images.unsplash.com/photo-1531482615713-2afd69097998",
-    },
-    {
-      title: "Cloud Computing",
-      desc: "Deploy, scale, and manage applications on modern cloud platforms.",
-      tag: "Cloud",
-      image: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8",
-    },
-    {
-      title: "Blockchain & Web3",
-      desc: "Build decentralized apps and understand smart contracts.",
-      tag: "Web3",
-      image: "https://images.unsplash.com/photo-1621504450181-5d356f61d307",
-    },
-  ];
+  const [items, setItems] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const events = await api.getEvents();
+        const mappedItems = events.map((e) => ({
+          title: e.title,
+          desc: e.description,
+          tag: e.category,
+          image: e.image_url,
+        }));
+
+        // If no events from backend, fallback or empty
+        if (mappedItems.length > 0) {
+          setItems(mappedItems);
+        } else {
+           // Fallback to empty or placeholder if preferred, OR keep empty to hide?
+           // keeping empty array if API returns empty
+           setItems([]);
+        }
+      } catch (err) {
+        console.error("Failed to load preview events", err);
+      }
+    };
+    fetchEvents();
+  }, []);
+
+  const hasItems = items.length > 0;
 
   return (
     <section className="relative py-28 bg-black overflow-hidden">
@@ -87,7 +58,16 @@ export default function PreviewSection() {
         </div>
       </Container>
 
-      <PerspectiveCarousel items={allItems} />
+      {/* Show spinner or placeholder if loading? Or just nothing/static if strictly preferred? 
+          For better UX, showing empty or spinner is better than crashing or old data.
+      */}
+      {hasItems ? (
+        <PerspectiveCarousel items={items} />
+      ) : (
+         <div className="flex h-64 items-center justify-center text-gray-500">
+            <p>Loading events...</p>
+         </div>
+      )}
     </section>
   );
 }
