@@ -1,25 +1,27 @@
 import { useEffect, useState } from 'react';
-import { onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
+import { onAuthStateChanged, User } from 'firebase/auth';
 import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 import { auth, db } from '@/lib/firebase';
 
 interface UseAuthReturn {
-  user: FirebaseUser | null;
+  user: User | null;
   loading: boolean;
 }
 
 export const useAuth = (): UseAuthReturn => {
-  const [user, setUser] = useState<FirebaseUser | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!auth || !db) {
-      setLoading(false);
+      // Defer state update to avoid synchronous render warning
+      setTimeout(() => setLoading(false), 0);
       return;
     }
 
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
+        if (!db) return;
         const userRef = doc(db, 'users', firebaseUser.uid);
         const userSnap = await getDoc(userRef);
 

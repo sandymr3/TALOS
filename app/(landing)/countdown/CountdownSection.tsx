@@ -63,7 +63,7 @@ function FlipUnit({ value, label, opacityLabel }: { value: number; label: string
 export default function CountdownSection() {
     const targetDate = new Date("2026-02-14T00:00:00").getTime();
     const [isMounted, setIsMounted] = useState(false);
-    const [time, setTime] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+    const [time, setTime] = useState<TimeLeft>(() => getTimeLeft(targetDate));
 
     // Animation Refs & State
     const triggerRef = useRef<HTMLDivElement>(null);
@@ -73,8 +73,7 @@ export default function CountdownSection() {
     const [navHeight, setNavHeight] = useState(0);
 
     useEffect(() => {
-        setIsMounted(true);
-        setTime(getTimeLeft(targetDate));
+        setTimeout(() => setIsMounted(true), 0);
 
         const updatePosition = () => {
             if (triggerRef.current) {
@@ -127,7 +126,7 @@ export default function CountdownSection() {
     const right = useTransform(scrollY, scrollRange, ["50%", "50%", "2%"]);
     const translateX = useTransform(scrollY, scrollRange, ["50%", "50%", "0%"]);
     const y = useTransform(scrollY, scrollRange, ["-50%", "-50%", "0%"]);
-    const scale = useTransform(scrollY, scrollRange, [1, 1, 0.3]);
+    const scale = useTransform(scrollY, scrollRange, [1, 1, 0.4]);
 
     // Fade out label earlier in the transition
     const opacityLabel = useTransform(scrollY, [triggerStart, triggerStart + 150], [1, 0]);
