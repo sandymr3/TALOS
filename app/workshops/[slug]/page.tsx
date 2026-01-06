@@ -64,52 +64,8 @@ export default function WorkshopDetailPage() {
 
     if (!workshop) return;
 
-    try {
-      setProcessing(true);
-
-      // Create order
-      const orderData = await api.createWorkshopOrder(workshopId);
-
-      // Initialize Razorpay
-      const options = {
-        key: orderData.key_id,
-        amount: orderData.amount,
-        currency: orderData.currency,
-        name: "TALOS",
-        description: `Registration for ${workshop.title}`,
-        order_id: orderData.order_id,
-        handler: async function (response: any) {
-          try {
-            // Verify payment
-            await api.verifyWorkshopPayment(workshopId, {
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_signature: response.razorpay_signature,
-            });
-            alert("Registration successful!");
-            router.push("/profile");
-          } catch (err) {
-            alert(
-              err instanceof Error ? err.message : "Payment verification failed"
-            );
-          }
-        },
-        prefill: {
-          email: user?.email || "",
-          name: user?.displayName || "",
-        },
-        theme: {
-          color: "#dc2626",
-        },
-      };
-
-      const razorpay = new window.Razorpay(options);
-      razorpay.open();
-    } catch (err) {
-      alert(err instanceof Error ? err.message : "Failed to initiate payment");
-    } finally {
-      setProcessing(false);
-    }
+    // Redirect to workshop registration page
+    router.push(`/workshops/${workshopId}/register`);
   };
 
   if (loading) {

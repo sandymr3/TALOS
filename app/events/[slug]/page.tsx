@@ -47,25 +47,8 @@ export default function EventDetailPage() {
 
     if (!event) return;
 
-    // For team events, redirect to registration page
-    if (event.is_team_event) {
-      router.push(`/register?event=${eventId}`);
-      return;
-    }
-
-    // For solo events, register directly
-    try {
-      setRegistering(true);
-      await api.registerForEvent(eventId, {
-        registration_type: "solo",
-      });
-      alert("Registration successful!");
-      router.push("/profile");
-    } catch (err) {
-      alert(err instanceof Error ? err.message : "Registration failed");
-    } finally {
-      setRegistering(false);
-    }
+    // All events are team-based, redirect to registration page
+    router.push(`/register/${eventId}`);
   };
 
   if (loading) {
@@ -132,17 +115,14 @@ export default function EventDetailPage() {
               </p>
             </div>
 
-            {event.is_team_event && (
-              <div className="bg-muted/20 p-6 rounded-xl border border-white/5">
-                <h3 className="text-3xl md:text-4xl font-bold font-zen-dots text-[#dc2626] mb-4">
-                  Team Information
-                </h3>
-                <p className="text-gray-400 font-ibm-plex-mono font-bold text-lg">
-                  This is a team event.{" "}
-                  {event.max_team_size && `Maximum team size: ${event.max_team_size} members.`}
-                </p>
-              </div>
-            )}
+            <div className="bg-muted/20 p-6 rounded-xl border border-white/5">
+              <h3 className="text-3xl md:text-4xl font-bold font-zen-dots text-[#dc2626] mb-4">
+                Team Information
+              </h3>
+              <p className="text-gray-400 font-ibm-plex-mono font-bold text-lg">
+                This is a team event. Team size: {event.min_team_size} - {event.max_team_size} members (including leader).
+              </p>
+            </div>
           </div>
 
           <div className="space-y-6">
@@ -167,9 +147,7 @@ export default function EventDetailPage() {
                 )}
                 <div className="flex justify-between">
                   <span className="text-gray-500">Fee</span>
-                  <span className="text-white">
-                    {event.registration_fee > 0 ? `₹${event.registration_fee}` : "Free"}
-                  </span>
+                  <span className="text-green-400">Free</span>
                 </div>
                 {event.max_participants && (
                   <div className="flex justify-between">

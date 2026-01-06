@@ -132,12 +132,13 @@ export default function ProfilePage() {
                 >
                   <div className="flex justify-between items-start">
                     <div>
-                      <p className="text-white font-bold">Event ID: {reg.event_id}</p>
-                      <p className="text-gray-400 text-sm capitalize">
-                        Type: {reg.registration_type}
-                      </p>
-                      {reg.team_name && (
-                        <p className="text-gray-400 text-sm">Team: {reg.team_name}</p>
+                      <p className="text-white font-bold">{reg.event_name || reg.event_id}</p>
+                      <p className="text-gray-400 text-sm">Team: {reg.team_name}</p>
+                      <p className="text-gray-400 text-sm">Leader: {reg.leader_name}</p>
+                      {reg.members && reg.members.length > 0 && (
+                        <p className="text-gray-500 text-xs mt-1">
+                          Members: {reg.members.map((m: any) => m.name).join(', ')}
+                        </p>
                       )}
                     </div>
                     <span
@@ -175,7 +176,8 @@ export default function ProfilePage() {
                 >
                   <div className="flex justify-between items-start">
                     <div>
-                      <p className="text-white font-bold">Workshop ID: {reg.workshop_id}</p>
+                      <p className="text-white font-bold">{reg.workshop_name || reg.workshop_id}</p>
+                      <p className="text-gray-400 text-sm">Participant: {reg.name}</p>
                       <p className="text-gray-400 text-sm">Amount: ₹{reg.amount}</p>
                       <p className="text-gray-400 text-sm">
                         Payment: {reg.payment_status}

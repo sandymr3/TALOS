@@ -45,3 +45,6 @@ firebase-export-*.json
 .vscode/
 .idea/
 app/seed/
+
+
+.firestore.rules/

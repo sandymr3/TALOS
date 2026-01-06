@@ -5,6 +5,7 @@ import type {
   EventRegistrationRequest,
   Workshop,
   WorkshopRegistration,
+  WorkshopRegistrationRequest,
   CreateOrderResponse,
   PaymentVerificationRequest,
   User,
@@ -73,11 +74,18 @@ class ApiClient {
   async registerForEvent(
     eventId: string,
     registration: EventRegistrationRequest
-  ): Promise<{ message: string; registration_id: string }> {
+  ): Promise<{ message: string; registration_id: string; team_name: string }> {
     return this.request(`/api/events/${eventId}/register`, {
       method: "POST",
       body: JSON.stringify(registration),
     });
+  }
+
+  async checkTeamName(
+    eventId: string,
+    teamName: string
+  ): Promise<{ available: boolean }> {
+    return this.request(`/api/events/${eventId}/check-team-name?team_name=${encodeURIComponent(teamName)}`);
   }
 
   // ============== Workshops ==============
@@ -91,11 +99,15 @@ class ApiClient {
     return this.request<Workshop>(`/api/workshops/${workshopId}`);
   }
 
-  async createWorkshopOrder(workshopId: string): Promise<CreateOrderResponse> {
+  async createWorkshopOrder(
+    workshopId: string,
+    registration: WorkshopRegistrationRequest
+  ): Promise<CreateOrderResponse> {
     return this.request<CreateOrderResponse>(
       `/api/workshops/${workshopId}/create-order`,
       {
         method: "POST",
+        body: JSON.stringify(registration),
       }
     );
   }
@@ -108,6 +120,13 @@ class ApiClient {
       method: "POST",
       body: JSON.stringify(verification),
     });
+  }
+
+  async checkWorkshopEmail(
+    workshopId: string,
+    email: string
+  ): Promise<{ registered: boolean }> {
+    return this.request(`/api/workshops/${workshopId}/check-email?email=${encodeURIComponent(email)}`);
   }
 
   // ============== User ==============
