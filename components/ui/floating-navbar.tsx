@@ -74,7 +74,7 @@ export const FloatingNav = ({
           className
         )}
       >
-        <Link href="/" className="font-black text-xl tracking-tighter text-white hover:text-red-500 transition-colors">
+        <Link href="/" className="font-black text-xl tracking-tighter text-white hover:text-red-500 transition-colors flex items-center gap-2">
           TALOS <span className="text-red-600 zen-dots-regular neon-text-red">5.0</span>
         </Link>
 

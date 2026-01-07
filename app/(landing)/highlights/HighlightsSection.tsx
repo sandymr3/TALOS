@@ -5,7 +5,7 @@ export default function HighlightsSection() {
   const stats = [
     { label: 'Participants', value: 5000, suffix: '+' },
     { label: 'Events', value: 25, suffix: '+' },
-    { label: 'Prize Pool', value: 100, prefix: '₹', suffix: 'k' },
+    { label: 'Prize Pool', value: 100, prefix: '₹', suffix: 'K' },
     { label: 'Colleges', value: 50, suffix: '+' },
   ];
 
@@ -14,8 +14,8 @@ export default function HighlightsSection() {
       <Container>
         <div className='flex flex-col lg:flex-row justify-between items-center gap-12'>
           <div className='lg:w-[25%] text-center lg:text-left'>
-            <h2 className='text-4xl font-bold mb-4 text-white'>Last Year&apos;s <span className='text-primary'>Legacy</span></h2>
-            <p className='text-muted-foreground'>
+            <h2 className='text-4xl font-[family-name:var(--font-zen-dots)] mb-4 text-red-600'>Last Year&apos;s <span className='text-primary'>Legacy</span></h2>
+            <p className='text-muted-foreground font-[family-name:var(--font-zen-dots)]'>
               TALOS 2024 set new benchmarks. This year, we go beyond limits.
             </p>
           </div>

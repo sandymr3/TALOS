@@ -43,8 +43,9 @@ export default function PreviewSection() {
       <Container>
         <div className="mb-12 flex items-end justify-between">
           <div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight text-white uppercase">
-              Events and <span className="text-red-600">Workshops</span>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-[family-name:var(--font-zen-dots)] tracking-tight text-white uppercase">
+              Events<span className="text-red-600"> and </span>
+              <span className="text-red-0">Workshops</span>
             </h2>
             <div className="mt-2 h-1 w-20 bg-gradient-to-r from-red-600 to-red-400 rounded-full" />
           </div>
