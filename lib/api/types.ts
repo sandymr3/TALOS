@@ -12,6 +12,7 @@ export interface Event {
   max_participants?: number;
   min_team_size: number;
   max_team_size: number;
+  rules?: string[];
   status: "open" | "closed" | "cancelled";
   created_at: string;
 }

@@ -108,7 +108,7 @@ export default function WorkshopDetailPage() {
                   backgroundPosition: "center",
                 }}
               >
-                <h1 className="text-4xl md:text-6xl font-black text-white tracking-tighter">
+                <h1 className="text-4xl md:text-6xl font-black text-white tracking-tighter font-zen-dots">
                   {workshop.title}
                 </h1>
               </div>
@@ -172,7 +172,7 @@ export default function WorkshopDetailPage() {
               <button
                 onClick={handleRegister}
                 disabled={processing || workshop.status !== "open"}
-                className="block w-full text-center bg-primary text-white py-3 rounded-lg font-bold text-sm mt-6 hover:bg-red-700 transition-all shadow-[0_0_15px_rgba(220,38,38,0.5)] hover:shadow-[0_0_25px_rgba(220,38,38,0.8)] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="block w-full text-center bg-red-600 text-white py-3 rounded-lg font-bold text-sm mt-6 hover:bg-red-700 transition-all shadow-[0_0_15px_rgba(220,38,38,0.5)] hover:shadow-[0_0_25px_rgba(220,38,38,0.8)] disabled:opacity-50 disabled:cursor-not-allowed font-zen-dots"
               >
                 {processing
                   ? "Processing..."

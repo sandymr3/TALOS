@@ -1,10 +1,22 @@
 /* Tailwind v4 entry */
 @import url('https://fonts.googleapis.com/css2?family=BBH+Bartle&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 @import url('https://fonts.cdnfonts.com/css/dseg14-classic');
 @import "tailwindcss";
+
+@theme {
+  --font-zen-dots: var(--font-zen-dots);
+  --font-ibm-plex-mono: var(--font-ibm-plex-mono);
+}
+
+/* Fallback utilities to ensure fonts work if theme fails */
+.font-zen-dots {
+  font-family: var(--font-zen-dots), sans-serif;
+}
+
+.font-ibm-plex-mono {
+  font-family: var(--font-ibm-plex-mono), monospace;
+}
 
 /* =========================
    THEME VARIABLES

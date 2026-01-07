@@ -92,10 +92,10 @@ export default function EventDetailPage() {
                 }}
               >
                 <div>
-                  <span className="text-xs font-bold bg-red-600/80 text-white px-2 py-1 rounded mb-2 inline-block">
+                  <span className="text-xs font-bold bg-red-600/80 text-white px-2 py-1 rounded mb-2 inline-block font-ibm-plex-mono">
                     {event.category}
                   </span>
-                  <h1 className="text-4xl md:text-6xl font-black text-white tracking-tighter">
+                  <h1 className="text-4xl md:text-6xl font-black text-white tracking-tighter font-zen-dots">
                     {event.title}
                   </h1>
                 </div>
@@ -122,6 +122,22 @@ export default function EventDetailPage() {
               <p className="text-gray-400 font-ibm-plex-mono font-bold text-lg">
                 This is a team event. Team size: {event.min_team_size} - {event.max_team_size} members (including leader).
               </p>
+            </div>
+
+            <div className="bg-muted/20 p-6 rounded-xl border border-white/5">
+              <h3 className="text-3xl md:text-4xl font-bold font-zen-dots text-[#dc2626] mb-4">
+                Rules
+              </h3>
+              <ul className="list-disc list-inside space-y-2 text-gray-400 font-ibm-plex-mono font-bold text-lg">
+                {(event.rules || [
+                  "Valid ID card is mandatory.",
+                  "Decisions of the judges are final.",
+                  "Maintain decorum during the event.",
+                  "Report at the venue 15 minutes prior."
+                ]).map((rule, index) => (
+                  <li key={index}>{rule}</li>
+                ))}
+              </ul>
             </div>
           </div>
 
@@ -160,7 +176,7 @@ export default function EventDetailPage() {
               <button
                 onClick={handleRegister}
                 disabled={registering || event.status !== "open"}
-                className="block w-full text-center bg-primary text-white py-3 rounded-lg font-bold text-sm mt-6 hover:bg-red-700 transition-all shadow-[0_0_15px_rgba(220,38,38,0.5)] hover:shadow-[0_0_25px_rgba(220,38,38,0.8)] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="block w-full text-center bg-red-600 text-white py-3 rounded-lg font-bold text-sm mt-6 hover:bg-red-700 transition-all shadow-[0_0_15px_rgba(220,38,38,0.5)] hover:shadow-[0_0_25px_rgba(220,38,38,0.8)] disabled:opacity-50 disabled:cursor-not-allowed font-zen-dots"
               >
                 {registering
                   ? "Registering..."

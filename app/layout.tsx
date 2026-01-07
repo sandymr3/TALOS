@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Press_Start_2P, Orbitron, Wallpoet, Zen_Dots } from "next/font/google";
+import { Press_Start_2P, Orbitron, Wallpoet, Zen_Dots, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/_core/navbar/Navbar";
 import Footer from "@/components/_core/footer/Footer";
@@ -31,6 +31,12 @@ const zenDots = Zen_Dots({
   variable: "--font-zen-dots",
 });
 
+const ibmPlexMono = IBM_Plex_Mono({
+  weight: ["400", "500", "600"],
+  subsets: ["latin"],
+  variable: "--font-ibm-plex-mono",
+});
+
 export const metadata: Metadata = {
   title: "College Symposium 2025",
   description: "Official website for College Symposium 2025",
@@ -43,7 +49,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`min-h-screen flex flex-col ${pressStart2P.variable} ${orbitron.variable} ${wallpoet.variable} ${zenDots.variable}`}>
+      <body className={`min-h-screen flex flex-col ${pressStart2P.variable} ${orbitron.variable} ${wallpoet.variable} ${zenDots.variable} ${ibmPlexMono.variable}`}>
         <CustomCursor />
         <Ribbons
           baseThickness={15}
