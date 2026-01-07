@@ -1,29 +1,111 @@
+"use client";
+
+import Image from "next/image";
+import logo from "./../../../app/taloslogo.png";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import ScrollFloat from "@/components/ui/ScrollFloat";
+
 export default function MascotSection() {
+  const containerRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"],
+  });
+
+  const rotateX = useTransform(scrollYProgress, [0, 0.5, 1], [15, 0, -15]);
+  const rotateY = useTransform(scrollYProgress, [0, 0.5, 1], [-15, 0, 15]);
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 0.8]);
+  const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+
   return (
-    <section className='py-32 text-center relative bg-black overflow-hidden'>
-      {/* Spotlight Effect */}
-      <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-red-600/20 blur-[100px] rounded-full pointer-events-none' />
-      
-      <div className='container mx-auto px-4 relative z-10'>
-        <h2 className='text-4xl md:text-5xl font-black mb-12 text-white tracking-tighter'>
-          MEET <span className='text-primary'>TALOS</span>
-        </h2>
-        
-        <div className='w-64 h-80 md:w-96 md:h-96 mx-auto relative group cursor-pointer'>
-           {/* Abstract Shape / Placeholder */}
-           <div className='absolute inset-0 bg-gradient-to-b from-red-500 to-red-900 clip-path-polygon opacity-80 group-hover:opacity-100 transition-opacity duration-500 shadow-[0_0_50px_rgba(220,38,38,0.5)]' 
-                style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }}>
-           </div>
-           
-           <div className='absolute inset-1 bg-black clip-path-polygon flex items-center justify-center'
-                style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }}>
-                <span className='text-muted-foreground group-hover:text-white transition-colors font-mono'>[3D MODEL LOADING]</span>
-           </div>
+    <section ref={containerRef} className="relative w-full bg-black overflow-hidden perspective-1000">
+      <div className="absolute inset-0 bg-gradient-to-br from-black via-black to-red-950/40" />
+
+      <div className="absolute right-1/3 top-1/2 -translate-y-1/2 w-[300px] md:w-[650px] h-[300px] md:h-[650px] bg-red-600/25 blur-[100px] md:blur-[180px] rounded-full pointer-events-none" />
+
+      <div className="relative z-10 container mx-auto px-6 py-20 md:py-32">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center">
+
+          <div className="flex justify-center md:justify-start perspective-1000">
+            <motion.div
+              style={{
+                rotateX,
+                rotateY,
+                scale,
+                y,
+                opacity,
+                transformStyle: "preserve-3d",
+              }}
+              className="relative w-full max-w-[280px] md:max-w-none flex justify-center"
+            >
+              <Image
+                src={logo}
+                alt="TALOS Logo"
+                priority
+                className="w-full md:w-[52rem] h-auto select-none drop-shadow-[0_0_40px_rgba(220,38,38,0.4)] md:drop-shadow-[0_0_60px_rgba(220,38,38,0.55)]"
+              />
+            </motion.div>
+          </div>
+          <div className="text-center md:text-left relative z-20">
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+              <h3 className="text-white bbh-bartle-black tracking-[0.4em] text-sm md:text-xl mb-4">
+                WE ARE
+              </h3>
+
+              <h2 className="text-red-600 bbh-bartle-black text-5xl md:text-8xl tracking-tight mb-8 md:mb-10">
+                TALOS
+              </h2>
+
+              <div className="text-gray-300 font-medium zen-dots-regular leading-relaxed text-sm md:text-lg max-w-xl mx-auto md:mx-0 flex flex-wrap gap-1">
+                <ScrollFloat
+                  as="span"
+                  animationDuration={1}
+                  ease='back.inOut(2)'
+                  scrollStart='center bottom+=50%'
+                  scrollEnd='bottom bottom-=40%'
+                  stagger={0.03}
+                  containerClassName='inline-block'
+                  textClassName='!text-sm md:!text-lg text-white font-bold !leading-relaxed'
+                >
+                  TALOS
+                </ScrollFloat>
+                <span className="inline-block"> – </span>
+                <ScrollFloat
+                  as="span"
+                  animationDuration={1}
+                  ease='back.inOut(2)'
+                  scrollStart='center bottom+=50%'
+                  scrollEnd='bottom bottom-=40%'
+                  stagger={0.03}
+                  containerClassName='inline-block'
+                  textClassName='!text-sm md:!text-lg text-red-500 !leading-relaxed'
+                >
+                  Towards Advance Level Of Science
+                </ScrollFloat>
+                <ScrollFloat
+                  as="span"
+                  animationDuration={1}
+                  ease='back.inOut(2)'
+                  scrollStart='center bottom+=50%'
+                  scrollEnd='bottom bottom-=40%'
+                  stagger={0.01}
+                  containerClassName='inline'
+                  textClassName='!text-sm md:!text-lg text-gray-300 !leading-relaxed text-left'
+                >
+                  is an annual occurrence conducted by the Department of Artificial Intelligence and Data Science to showcase the importance of the domain. A wave of fun and technical events will be conducted throughout the day.
+                </ScrollFloat>
+              </div>
+            </motion.div>
+          </div>
+
         </div>
-        
-        <p className='mt-12 text-muted-foreground max-w-lg mx-auto'>
-          The bronze giant of Crete, reimagined for the digital age. A symbol of strength, protection, and technological marvel.
-        </p>
       </div>
     </section>
   );

@@ -24,7 +24,7 @@ export default function SponsorsPage() {
       </div>
       
       <div className='mt-16 text-center'>
-        <p className='text-muted-foreground mb-6'>Interested in sponsoring TALOS 2025?</p>
+        <p className='text-muted-foreground mb-6'>Interested in sponsoring TALOS 2026?</p>
         <button className='px-6 py-3 bg-white/5 border border-white/10 rounded-full hover:bg-primary hover:text-white transition-colors'>
           Download Prospectus
         </button>
