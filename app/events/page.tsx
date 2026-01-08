@@ -75,11 +75,6 @@ export default function EventsPage() {
                     <span className="w-fit text-xs font-mono text-red-500 bg-red-500/10 px-2 py-1 rounded">
                       {event.date}, {event.time}
                     </span>
-                    {event.registration_fee > 0 && (
-                      <span className="w-fit text-xs font-mono text-green-500 bg-green-500/10 px-2 py-1 rounded">
-                        ₹{event.registration_fee}
-                      </span>
-                    )}
                     <Link 
                       href={`/events/${event.event_id}`} 
                       className="w-full text-center px-4 py-2 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 transition-colors zen-dots-regular text-xl"
